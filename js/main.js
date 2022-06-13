@@ -35,28 +35,38 @@ function getRandomArrayElement (elements) {
   return elements[getRandomPositiveInteger(0, elements.length - 1)];
 }
 
-function createNewNumericArray (min, max) {
-  const newArray = [];
-  for (let i = min; i <= max; i++) {
-    newArray.push(i);
-  }
-  return newArray;
+function createNumericArray (length = 10, start = 1) {
+  return Array.from({ length }, (_, i) => start + i);
 }
 
-function shuffleArray (array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
-const ID_ARRAYS = createNewNumericArray(1, 25);
-const URL_ARRAYS = createNewNumericArray(1, 25);
-const commentsId = shuffleArray(createNewNumericArray(1, 1000));
+const ID_ARRAYS = createNumericArray(25);
+const URL_ARRAYS = createNumericArray(25);
+const commentsIds = new Set();
 
 function getFirstArrayIndex (array) {
   return array.shift();
+}
+
+function getRandomCommentId () {
+  let noUnique = true;
+  let randomId;
+
+  while(noUnique) {
+    randomId = getRandomPositiveInteger(1, 1000);
+    noUnique = commentsIds.has(randomId);
+  }
+
+  commentsIds.add(randomId);
+  return randomId;
+}
+
+function generateComment () {
+  return {
+    id: getRandomCommentId(),
+    avatar: `img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
+    message: getRandomArrayElement(MESSAGE_EXAMPLES),
+    name: getRandomArrayElement(COMMENTATOR_NAMES),
+  };
 }
 
 function getPhotoDescription () {
@@ -65,15 +75,11 @@ function getPhotoDescription () {
     url: `photos/${getFirstArrayIndex(URL_ARRAYS)}.jpg`,
     description: 'Случайная фотография',
     likes: getRandomPositiveInteger(15, 200),
-    comments: {
-      id: getFirstArrayIndex(commentsId),
-      avatar: `img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
-      message: getRandomArrayElement(MESSAGE_EXAMPLES),
-      name: getRandomArrayElement(COMMENTATOR_NAMES),
-    },
+    comments: Array.from(
+      {length: getRandomPositiveInteger(1, 10)},
+      generateComment),
   };
 }
 // Я пока отключил на этой строке eslinter, чтобы не ругался на неиспользуемую переменную
 // eslint-disable-next-line no-unused-vars
 const photoDescriptions = Array.from({length: 25}, getPhotoDescription);
-

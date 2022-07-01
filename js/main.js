@@ -1,5 +1,3 @@
-import './util.js';
 import './photo-rendering.js';
-import {photoDescriptions} from './data.js';
-
-photoDescriptions();
+import './user-form.js';
+import './form-validation.js';

@@ -1,3 +1,6 @@
+import {resetImageScale} from './image-scaling.js';
+import { resetImageEffect} from './image-effects.js';
+
 const userFormElement = document.querySelector('.img-upload__form');
 const uploadImgElement = document.querySelector('#upload-file');
 const textHashtagsElement = document.querySelector('.text__hashtags');
@@ -26,6 +29,8 @@ function openUserModal () {
 function closeUserModal () {
   imgOverlayElement.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
+  resetImageEffect();
+  resetImageScale();
 
   document.removeEventListener('keydown', onPopupEscKeydown);
 }

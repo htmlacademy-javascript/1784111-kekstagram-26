@@ -45,7 +45,11 @@ pristine.addValidator(userFormElement.querySelector('.text__hashtags'), validate
 pristine.addValidator(userFormElement.querySelector('.text__hashtags'), validateHashtagsAmount, 'Не больше 5 хэштегов');
 pristine.addValidator(userFormElement.querySelector('.text__hashtags'), validateHashtagsUnique, 'Используйте уникальные хэштеги');
 
-userFormElement.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+// userFormElement.addEventListener('submit', (evt) => {
+//   evt.preventDefault();
+//   pristine.validate();
+// });
+
+userFormElement.addEventListener('submit', () => {
   pristine.validate();
 });

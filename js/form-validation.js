@@ -1,4 +1,6 @@
-import {userFormElement} from './user-form.js';
+import {sendData} from './server-interaction.js';
+
+const userFormElement = document.querySelector('.img-upload__form');
 
 const pristine = new Pristine(userFormElement, {
   classTo: 'text__label',
@@ -45,11 +47,14 @@ pristine.addValidator(userFormElement.querySelector('.text__hashtags'), validate
 pristine.addValidator(userFormElement.querySelector('.text__hashtags'), validateHashtagsAmount, 'Не больше 5 хэштегов');
 pristine.addValidator(userFormElement.querySelector('.text__hashtags'), validateHashtagsUnique, 'Используйте уникальные хэштеги');
 
-// userFormElement.addEventListener('submit', (evt) => {
-//   evt.preventDefault();
-//   pristine.validate();
-// });
+userFormElement.addEventListener('submit', (evt) => {
+  evt.preventDefault();
 
-userFormElement.addEventListener('submit', () => {
-  pristine.validate();
+  const isValid = pristine.validate();
+  if (isValid) {
+    const formData = new FormData(evt.target);
+    sendData(formData);
+  }
 });
+
+export {pristine};

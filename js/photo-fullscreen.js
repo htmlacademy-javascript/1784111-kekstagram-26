@@ -4,10 +4,10 @@ const socialCommentCountElement = document.querySelector('.social__comment-count
 const commentsLoaderElement = document.querySelector('.comments-loader');
 const bigPictureCancelElement = document.querySelector('.big-picture__cancel');
 const likesCountElement = document.querySelector('.likes-count');
-const comentsCountElement = document.querySelector('.comments-count');
 const socialCaptionElement = document.querySelector('.social__caption');
-const socialCommentElement = document.querySelector('.social__comments');
+const socialCommentsElement = document.querySelector('.social__comments');
 const UserCommentTemplate = document.querySelector('#user-comment').content.querySelector('.social__comment');
+
 
 function openFullScreenPhoto(photo) {
   bigPictureElement.classList.remove('hidden');
@@ -17,7 +17,8 @@ function openFullScreenPhoto(photo) {
 
   bigPictureImgElement.src = photo.url;
   likesCountElement.textContent = photo.likes;
-  comentsCountElement.textContent = photo.comments.length;
+  socialCommentCountElement.textContent = (photo.comments.length < 5) ? 'Показаны все комментарии' :
+    `5 из ${photo.comments.length} комментариев`;
   socialCaptionElement.textContent = photo.description;
 
   userCommentsRendering(photo.comments);
@@ -38,12 +39,17 @@ function userCommentsRendering(comments) {
     commentsListFragment.append(commentElement);
   });
 
-  socialCommentElement.append(commentsListFragment);
+  socialCommentsElement.append(commentsListFragment);
+}
+
+function resetUserComments() {
+  socialCommentsElement.textContent = '';
 }
 
 function closeFullScreenPhotoOnClick () {
   bigPictureElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
+  resetUserComments();
 
   bigPictureCancelElement.removeEventListener('click', closeFullScreenPhotoOnClick);
   document.removeEventListener('keydown', closeFullScreenPhotoOnEsc);
@@ -53,6 +59,7 @@ function closeFullScreenPhotoOnEsc (evt) {
   if (evt.key === 'Escape') {
     bigPictureElement.classList.add('hidden');
     document.body.classList.remove('modal-open');
+    resetUserComments();
 
     bigPictureCancelElement.removeEventListener('click', closeFullScreenPhotoOnClick);
     document.removeEventListener('keydown', closeFullScreenPhotoOnEsc);

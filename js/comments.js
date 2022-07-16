@@ -5,11 +5,11 @@ const сommentTemplate = document.querySelector('#comment').content.querySelecto
 const сommentCountElement = document.querySelector('.social__comment-count');
 const loadCommentsButton = document.querySelector('.comments-loader');
 
-export default function initComments() {
+export default function initComments(allComments) {
   loadMoreComment();
   loadCommentsButton.addEventListener('click', loadMoreComment);
 
-  function loadMoreComment(allComments) {
+  function loadMoreComment() {
     const currentNumber = socialCommentsElement.childElementCount;
     let endsOfComment = currentNumber + DEFAULT_DISPLAYED_USER_COMMENTS;
     const {length} = allComments;

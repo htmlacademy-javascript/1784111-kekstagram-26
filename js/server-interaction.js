@@ -1,6 +1,10 @@
 import {renderPhotosList} from './photo-rendering.js';
-import {displayLoadErrorMessage} from './util.js';
+import {displayLoadErrorMessage, debounce} from './util.js';
 import {closeUserModal} from './user-form.js';
+import {showPhotoFilters} from './photos-filter.js';
+import {getRandomPhotos, getDiscussedPhotos, setRandomFilter, setDiscussedFilter, setDefaultFilter} from './photos-filter.js';
+
+const RERENDER_DELAY = 500;
 
 const bodyElement = document.querySelector('body');
 const messageTemplateSuccess = document.querySelector('#success').content.querySelector('.success');
@@ -16,6 +20,12 @@ function loadData (onSuccess, onError) {
     })
     .then((data) => {
       onSuccess(data);
+      setRandomFilter(debounce(() => onSuccess(data, getRandomPhotos), RERENDER_DELAY,));
+      setDiscussedFilter(debounce(() => onSuccess(data, getDiscussedPhotos), RERENDER_DELAY,));
+      setDefaultFilter(debounce(() => onSuccess(data), RERENDER_DELAY,));
+    })
+    .then(() => {
+      showPhotoFilters();
     })
     .catch(() => {
       onError();

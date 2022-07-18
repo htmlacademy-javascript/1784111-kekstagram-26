@@ -62,4 +62,4 @@ function getPhotoDescription () {
 
 const photoDescriptions = () => Array.from({length: 25}, getPhotoDescription);
 
-export {photoDescriptions};
+export {photoDescriptions, getRandomCommentId};

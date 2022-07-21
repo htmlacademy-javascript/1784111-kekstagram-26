@@ -1,12 +1,11 @@
-import {openFullScreenPhoto} from './photo-fullscreen.js';
-import {getDefaultPhotos} from './photos-filter.js';
+import{openFullScreenPhoto} from './photo-fullscreen.js';
 
-const picturesElement = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-
-function renderPhotosList (photos, filter = getDefaultPhotos) {
+export default function renderPhotosList(photos) {
+  const picturesElement = document.querySelector('.pictures');
+  const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
   const photosListFragment = document.createDocumentFragment();
-  filter(photos.slice()).forEach((photo) => {
+
+  photos.forEach((photo) => {
     const pictureElement = pictureTemplate.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = photo.url;
     pictureElement.querySelector('.picture__likes').textContent = photo.likes;
@@ -20,5 +19,3 @@ function renderPhotosList (photos, filter = getDefaultPhotos) {
 
   picturesElement.append(photosListFragment);
 }
-
-export {renderPhotosList};

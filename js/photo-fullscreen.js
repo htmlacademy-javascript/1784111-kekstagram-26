@@ -30,9 +30,9 @@ function openFullScreenPhoto(photo) {
 
   function closeFullScreenPhotoOnEsc(evt) {
     if (evt.key === 'Escape') {
-      closeFullScreenPhoto ();
+      closeFullScreenPhoto();
     }
   }
 }
 
-export {openFullScreenPhoto};
+export{openFullScreenPhoto};

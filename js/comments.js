@@ -1,6 +1,6 @@
 const DEFAULT_DISPLAYED_USER_COMMENTS = 5;
 
-const socialCommentsElement = document.querySelector('.social__comments');
+const commentsElement = document.querySelector('.social__comments');
 const сommentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 const сommentCountElement = document.querySelector('.social__comment-count');
 const loadCommentsButton = document.querySelector('.comments-loader');
@@ -10,7 +10,7 @@ export default function initComments(allComments) {
   loadCommentsButton.addEventListener('click', loadMoreComment);
 
   function loadMoreComment() {
-    const currentNumber = socialCommentsElement.childElementCount;
+    const currentNumber = commentsElement.childElementCount;
     let endsOfComment = currentNumber + DEFAULT_DISPLAYED_USER_COMMENTS;
     const {length} = allComments;
     const allCommentsWillBeDisplayed = endsOfComment > length;
@@ -23,7 +23,7 @@ export default function initComments(allComments) {
   }
 
   return function resetUserComments() {
-    socialCommentsElement.textContent = '';
+    commentsElement.textContent = '';
     loadCommentsButton.removeEventListener('click', loadMoreComment);
   };
 }
@@ -39,5 +39,5 @@ function userCommentsRendering(comments) {
     commentsListFragment.append(commentElement);
   });
 
-  socialCommentsElement.append(commentsListFragment);
+  commentsElement.append(commentsListFragment);
 }

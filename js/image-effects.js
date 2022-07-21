@@ -1,17 +1,18 @@
-import {previewImageElement} from './image-scaling.js';
-
-const effectsRadioElements = document.querySelectorAll('.effects__radio');
-const imgUploadEffectsElement = document.querySelector('.img-upload__effects');
+const effectsRadioNodeList = document.querySelectorAll('.effects__radio');
+const imgEffectsElement = document.querySelector('.img-upload__effects');
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectLevelValueElement = document.querySelector('.effect-level__value');
+const previewImageElement = document.querySelector('.img-upload__preview img');
 
-function addPreviewImageCheckedClass () {
-  effectsRadioElements.forEach((element) => {
-    if (element.checked) {
+function addPreviewImageCheckedClass() {
+  for (let i = 0; i < effectsRadioNodeList.length; i++) {
+    if (effectsRadioNodeList[i].checked) {
       previewImageElement.removeAttribute('class');
-      previewImageElement.classList.add(`effects__preview--${element.value}`);
+      previewImageElement.classList.add(`effects__preview--${effectsRadioNodeList[i].value}`);
+
+      break;
     }
-  });
+  }
 }
 
 noUiSlider.create(sliderElement, {
@@ -22,28 +23,32 @@ noUiSlider.create(sliderElement, {
   start: 0,
   connect: 'lower',
   format: {
-    to: function (value) {
+    to: function(value) {
       if (Number.isInteger(value)) {
         return value.toFixed(0);
       }
       return value.toFixed(1);
     },
-    from: function (value) {
+    from: function(value) {
       return parseFloat(value);
     },
   },
 });
 
-function hidingSlider () {
-  if (previewImageElement.classList.contains('effects__preview--none') || !previewImageElement.hasAttribute('class')) {
+function isImgClass(className) {
+  return previewImageElement.className.includes(className);
+}
+
+function hidingSlider() {
+  if (isImgClass('none') || !previewImageElement.hasAttribute('class')) {
     sliderElement.setAttribute('hidden', '');
   } else {
     sliderElement.removeAttribute('hidden', '');
   }
 }
 
-function changeSlider () {
-  if (previewImageElement.classList.contains('effects__preview--chrome')) {
+function changeSlider() {
+  if (isImgClass('chrome')) {
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: 0,
@@ -52,7 +57,7 @@ function changeSlider () {
       step: 0.1,
     });
     sliderElement.noUiSlider.set(1);
-  } else if (previewImageElement.classList.contains('effects__preview--sepia')) {
+  } else if (isImgClass('sepia')) {
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: 0,
@@ -61,7 +66,7 @@ function changeSlider () {
       step: 0.1,
     });
     sliderElement.noUiSlider.set(1);
-  } else if (previewImageElement.classList.contains('effects__preview--marvin')) {
+  } else if (isImgClass('marvin')) {
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: 0,
@@ -70,7 +75,7 @@ function changeSlider () {
       step: 1,
     });
     sliderElement.noUiSlider.set(100);
-  } else if (previewImageElement.classList.contains('effects__preview--phobos')) {
+  } else if (isImgClass('phobos')) {
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: 0,
@@ -79,7 +84,7 @@ function changeSlider () {
       step: 0.1,
     });
     sliderElement.noUiSlider.set(3);
-  } else if (previewImageElement.classList.contains('effects__preview--heat')) {
+  } else if (isImgClass('heat')) {
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: 1,
@@ -91,31 +96,29 @@ function changeSlider () {
   }
 }
 
-function changeImageFilterEffect () {
+function changeImageFilterEffect() {
   const currentSliderValue = effectLevelValueElement.value;
-  if (previewImageElement.classList.contains('effects__preview--chrome')) {
+  if (isImgClass('chrome')) {
     previewImageElement.style.filter = `grayscale(${currentSliderValue})`;
-  } else if (previewImageElement.classList.contains('effects__preview--sepia')) {
+  } else if (isImgClass('sepia')) {
     previewImageElement.style.filter = `sepia(${currentSliderValue})`;
-  } else if (previewImageElement.classList.contains('effects__preview--marvin')) {
+  } else if (isImgClass('marvin')) {
     previewImageElement.style.filter = `invert(${currentSliderValue}%)`;
-  } else if (previewImageElement.classList.contains('effects__preview--phobos')) {
+  } else if (isImgClass('phobos')) {
     previewImageElement.style.filter = `blur(${currentSliderValue}px)`;
-  } else if (previewImageElement.classList.contains('effects__preview--heat')) {
+  } else if (isImgClass('heat')) {
     previewImageElement.style.filter = `brightness(${currentSliderValue})`;
   }
 }
 
-function resetImageFilter () {
-  if (previewImageElement.classList.contains('effects__preview--none')) {
-    // Тут не совсем уверен должен ли масштаб сбрасываться при смене фильтра
-    // previewImageElement.removeAttribute('style');
+function resetImageFilter() {
+  if (isImgClass('none')) {
     previewImageElement.style.filter = '';
     effectLevelValueElement.value = '';
   }
 }
 
-function resetImageEffect () {
+function resetImageEffect() {
   previewImageElement.removeAttribute('style');
   previewImageElement.removeAttribute('class');
   hidingSlider();
@@ -127,11 +130,11 @@ sliderElement.noUiSlider.on('update', () => {
   changeImageFilterEffect();
 });
 
-imgUploadEffectsElement.addEventListener('change', () => {
+imgEffectsElement.addEventListener('change', () => {
   addPreviewImageCheckedClass();
   hidingSlider();
   changeSlider();
   resetImageFilter();
 });
 
-export {resetImageEffect};
+export{resetImageEffect};

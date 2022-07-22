@@ -4,20 +4,20 @@ const MIN_SCALE = 25;
 const MAX_SCALE = 100;
 
 const scaleControlElement = document.querySelector('.scale__control--value');
-const SmallerButtonElement = document.querySelector('.scale__control--smaller');
-const BiggerButtonElement = document.querySelector('.scale__control--bigger');
+const smallerButtonElement = document.querySelector('.scale__control--smaller');
+const biggerButtonElement = document.querySelector('.scale__control--bigger');
 const previewImageElement = document.querySelector('.img-upload__preview img');
 
 let scaleNumericValue = DEFAULT_SCALE_VALUE.slice(0, -1);
 
-SmallerButtonElement.addEventListener('click', () => {
+smallerButtonElement.addEventListener('click', () => {
   if (scaleNumericValue > MIN_SCALE) {
     scaleControlElement.value = `${scaleNumericValue -= SCALE_STEP}%`;
     previewImageElement.style.transform = `scale(${scaleControlElement.value})`;
   }
 });
 
-BiggerButtonElement.addEventListener('click', () => {
+biggerButtonElement.addEventListener('click', () => {
   if (scaleNumericValue < MAX_SCALE) {
     scaleControlElement.value = `${scaleNumericValue += SCALE_STEP}%`;
     previewImageElement.style.transform = `scale(${scaleControlElement.value})`;

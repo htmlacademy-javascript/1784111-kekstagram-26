@@ -1,3 +1,5 @@
+import {isEscPressed} from './keyboard.js';
+
 const messageTemplateSuccess = document.querySelector('#success').content.querySelector('.success');
 const messageTemplateError = document.querySelector('#error').content.querySelector('.error');
 const bodyElement = document.body;
@@ -9,21 +11,21 @@ function displaySendSuccessMessage() {
   const successInnerElement = document.querySelector('.success__inner');
   const successTitleElement = document.querySelector('.success__title');
 
-  const removeSuccessMessageOnClick = (evt) => {
+  function removeSuccessMessageOnClick(evt) {
     if(evt.target !== successInnerElement && evt.target !== successTitleElement) {
       successMessageElement.remove();
 
       removeSuccessMessageEventListeners();
     }
-  };
+  }
 
-  const removeSuccessMessageOnEsc = (evt) => {
-    if(evt.key === 'Escape') {
+  function removeSuccessMessageOnEsc(evt) {
+    if(isEscPressed(evt)) {
       successMessageElement.remove();
 
       removeSuccessMessageEventListeners();
     }
-  };
+  }
 
   function removeSuccessMessageEventListeners() {
     document.removeEventListener('click', removeSuccessMessageOnClick);
@@ -42,21 +44,21 @@ function displaySendErrorMessage() {
   const errorTitleElement = document.querySelector('.error__title');
   errorMessageElement.style.zIndex = '100';
 
-  const removeErrorMessageOnClick = (evt) => {
+  function removeErrorMessageOnClick(evt) {
     if(evt.target !== errorInnerElement && evt.target !== errorTitleElement) {
       errorMessageElement.remove();
 
       removeErrorMessageEventListeners();
     }
-  };
+  }
 
-  const removeErrorMessageOnEsc = (evt) => {
-    if(evt.key === 'Escape') {
+  function removeErrorMessageOnEsc(evt) {
+    if(isEscPressed(evt)) {
       errorMessageElement.remove();
 
       removeErrorMessageEventListeners();
     }
-  };
+  }
 
   function removeErrorMessageEventListeners() {
     document.removeEventListener('click', removeErrorMessageOnClick);

@@ -6,7 +6,7 @@ function displayLoadErrorMessage() {
   loadErrorMessage.style.left = '0';
   loadErrorMessage.style.top = '0';
   loadErrorMessage.style.right = '0';
-  loadErrorMessage.style. margin = 0;
+  loadErrorMessage.style.margin = '0';
   loadErrorMessage.style.padding = '20px 3px';
   loadErrorMessage.style.fontSize = '16px';
   loadErrorMessage.style.textTransform = 'none';

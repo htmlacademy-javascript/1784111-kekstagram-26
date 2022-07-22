@@ -1,7 +1,7 @@
 import{displayLoadErrorMessage} from './loading-message.js';
 import{displaySendSuccessMessage, displaySendErrorMessage} from './sending-messages.js';
 import{blockSubmitButton, unblockSubmitButton} from './blocking-submit-button.js';
-import{closeUserModal} from './user-form.js';
+import{userFormElement} from './user-form.js';
 import initFilters from './photos-filter.js';
 
 function loadData(onSuccess, onError) {
@@ -28,9 +28,9 @@ function sendData(formData) {
   )
     .then((response) => {
       if (response.ok) {
-        closeUserModal();
         displaySendSuccessMessage();
         unblockSubmitButton();
+        userFormElement.reset();
       } else {
         displaySendErrorMessage();
         unblockSubmitButton();

@@ -1,6 +1,7 @@
 import{sendData} from './server-interaction.js';
 
 const userFormElement = document.querySelector('.img-upload__form');
+const arrayInput = userFormElement.querySelector('.text__hashtags');
 
 const pristine = new Pristine(userFormElement, {
   classTo: 'text__label',
@@ -13,39 +14,28 @@ function validateHashtag (value) {
   return re.test(value);
 }
 
-function validateHashtagsPattern() {
-  const arrayInput = userFormElement.querySelector('.text__hashtags');
-  const hashtagsArray = arrayInput.value.split(' ');
+function validateHashtagsPattern(value) {
+  const hashtagsArray = value.split(' ');
 
-  if (arrayInput.value.length) {
-    let checkPattern;
-    for (let i = 0; i < hashtagsArray.length; i++) {
-      checkPattern = validateHashtag(hashtagsArray[i]);
-      if (checkPattern === false) {
-        break;
-      }
-    }
-    return checkPattern;
-  }
-  return true;
+  return value.length ? hashtagsArray.every(validateHashtag): true;
 }
 
-function validateHashtagsAmount() {
-  const arrayInput = userFormElement.querySelector('.text__hashtags');
-  const hashtagsArray = arrayInput.value.split(' ');
+function validateHashtagsAmount(value) {
+  const hashtagsArray = value.split(' ');
+
   return hashtagsArray.length <= 5;
 }
 
-function validateHashtagsUnique() {
-  const arrayInput = userFormElement.querySelector('.text__hashtags');
-  const hashtagsArray = arrayInput.value.toLowerCase().split(' ');
+function validateHashtagsUnique(value) {
+  const hashtagsArray = value.toLowerCase().split(' ');
   const hashtagsUniqueArray = Array.from(new Set(hashtagsArray));
+
   return hashtagsArray.length === hashtagsUniqueArray.length;
 }
 
-pristine.addValidator(userFormElement.querySelector('.text__hashtags'), validateHashtagsPattern, 'Хэштеги должны начинаться с #, не могут содержать пробелы, спецсимволы, символы пунктуации, эмодзи и т. д.;');
-pristine.addValidator(userFormElement.querySelector('.text__hashtags'), validateHashtagsAmount, 'Не больше 5 хэштегов');
-pristine.addValidator(userFormElement.querySelector('.text__hashtags'), validateHashtagsUnique, 'Используйте уникальные хэштеги');
+pristine.addValidator(arrayInput, validateHashtagsPattern, 'Хэштеги должны начинаться с #, не могут содержать пробелы, спецсимволы, символы пунктуации, эмодзи и т. д.;');
+pristine.addValidator(arrayInput, validateHashtagsAmount, 'Не больше 5 хэштегов');
+pristine.addValidator(arrayInput, validateHashtagsUnique, 'Используйте уникальные хэштеги');
 
 userFormElement.addEventListener('submit', (evt) => {
   evt.preventDefault();

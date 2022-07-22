@@ -6,20 +6,22 @@ const userFormElement = document.querySelector('.img-upload__form');
 const uploadImgElement = document.querySelector('#upload-file');
 const textHashtagsElement = document.querySelector('.text__hashtags');
 const userCommentElement = document.querySelector('.text__description');
-const uploadImgCloseElement = document.querySelector('.img-upload__cancel');
 const imgOverlayElement = document.querySelector('.img-upload__overlay');
 const bodyElement = document.body;
 
-const onPopupEscKeydown = (evt) => {
-  const isUserTyping = evt.target === textHashtagsElement || evt.target === userCommentElement;
+uploadImgElement.addEventListener('input', openUserModal);
+userFormElement.addEventListener('reset', () => {
+  closeUserModal();
+  resetImageEffect();
+  resetImageScale();
+  pristine.reset();
+});
 
-  if (evt.key === 'Escape' && !isUserTyping  && !bodyElement.contains(document.querySelector('.error'))) {
-    evt.preventDefault();
-    closeUserModal();
-    userFormElement.reset();
-    pristine.reset();
-  }
-};
+function closeUserModal() {
+  imgOverlayElement.classList.add('hidden');
+  bodyElement.classList.remove('modal-open');
+  document.removeEventListener('keydown', onPopupEscKeydown);
+}
 
 function openUserModal() {
   imgOverlayElement.classList.remove('hidden');
@@ -28,21 +30,13 @@ function openUserModal() {
   document.addEventListener('keydown', onPopupEscKeydown);
 }
 
-function closeUserModal() {
-  imgOverlayElement.classList.add('hidden');
-  bodyElement.classList.remove('modal-open');
-  userFormElement.reset();
-  resetImageEffect();
-  resetImageScale();
+function onPopupEscKeydown(evt) {
+  const isUserTyping = evt.target === textHashtagsElement || evt.target === userCommentElement;
 
-  document.removeEventListener('keydown', onPopupEscKeydown);
+  if (evt.key === 'Escape' && !isUserTyping  && !bodyElement.contains(document.querySelector('.error'))) {
+    evt.preventDefault();
+    userFormElement.reset();
+  }
 }
 
-uploadImgElement.addEventListener('input', openUserModal);
-
-uploadImgCloseElement.addEventListener('click', () => {
-  closeUserModal();
-  pristine.reset();
-});
-
-export{userFormElement, closeUserModal};
+export{userFormElement};

@@ -9,21 +9,21 @@ function displaySendSuccessMessage() {
   const successInnerElement = document.querySelector('.success__inner');
   const successTitleElement = document.querySelector('.success__title');
 
-  const removeSuccessMessageOnClick = (evt) => {
+  function removeSuccessMessageOnClick(evt) {
     if(evt.target !== successInnerElement && evt.target !== successTitleElement) {
       successMessageElement.remove();
 
       removeSuccessMessageEventListeners();
     }
-  };
+  }
 
-  const removeSuccessMessageOnEsc = (evt) => {
+  function removeSuccessMessageOnEsc(evt) {
     if(evt.key === 'Escape') {
       successMessageElement.remove();
 
       removeSuccessMessageEventListeners();
     }
-  };
+  }
 
   function removeSuccessMessageEventListeners() {
     document.removeEventListener('click', removeSuccessMessageOnClick);
@@ -42,21 +42,21 @@ function displaySendErrorMessage() {
   const errorTitleElement = document.querySelector('.error__title');
   errorMessageElement.style.zIndex = '100';
 
-  const removeErrorMessageOnClick = (evt) => {
+  function removeErrorMessageOnClick(evt) {
     if(evt.target !== errorInnerElement && evt.target !== errorTitleElement) {
       errorMessageElement.remove();
 
       removeErrorMessageEventListeners();
     }
-  };
+  }
 
-  const removeErrorMessageOnEsc = (evt) => {
+  function removeErrorMessageOnEsc(evt) {
     if(evt.key === 'Escape') {
       errorMessageElement.remove();
 
       removeErrorMessageEventListeners();
     }
-  };
+  }
 
   function removeErrorMessageEventListeners() {
     document.removeEventListener('click', removeErrorMessageOnClick);

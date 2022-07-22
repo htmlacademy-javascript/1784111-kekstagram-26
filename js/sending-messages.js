@@ -1,3 +1,5 @@
+import {isEscPressed} from './keyboard.js';
+
 const messageTemplateSuccess = document.querySelector('#success').content.querySelector('.success');
 const messageTemplateError = document.querySelector('#error').content.querySelector('.error');
 const bodyElement = document.body;
@@ -18,7 +20,7 @@ function displaySendSuccessMessage() {
   }
 
   function removeSuccessMessageOnEsc(evt) {
-    if(evt.key === 'Escape') {
+    if(isEscPressed(evt)) {
       successMessageElement.remove();
 
       removeSuccessMessageEventListeners();
@@ -51,7 +53,7 @@ function displaySendErrorMessage() {
   }
 
   function removeErrorMessageOnEsc(evt) {
-    if(evt.key === 'Escape') {
+    if(isEscPressed(evt)) {
       errorMessageElement.remove();
 
       removeErrorMessageEventListeners();

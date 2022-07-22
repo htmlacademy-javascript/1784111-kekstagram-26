@@ -1,6 +1,7 @@
 import{resetImageScale} from './image-scaling.js';
 import{resetImageEffect} from './image-effects.js';
 import{pristine} from './form-validation.js';
+import {isEscPressed} from './keyboard.js';
 
 const userFormElement = document.querySelector('.img-upload__form');
 const uploadImgElement = document.querySelector('#upload-file');
@@ -33,7 +34,7 @@ function openUserModal() {
 function onPopupEscKeydown(evt) {
   const isUserTyping = evt.target === textHashtagsElement || evt.target === userCommentElement;
 
-  if (evt.key === 'Escape' && !isUserTyping  && !bodyElement.contains(document.querySelector('.error'))) {
+  if (isEscPressed(evt) && !isUserTyping  && !bodyElement.contains(document.querySelector('.error'))) {
     evt.preventDefault();
     userFormElement.reset();
   }

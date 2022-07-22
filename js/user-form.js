@@ -1,7 +1,7 @@
 import{resetImageScale} from './image-scaling.js';
 import{resetImageEffect} from './image-effects.js';
-import{pristine} from './form-validation.js';
 import {isEscPressed} from './keyboard.js';
+import{pristine} from './form-validation.js';
 
 const userFormElement = document.querySelector('.img-upload__form');
 const uploadImgElement = document.querySelector('#upload-file');

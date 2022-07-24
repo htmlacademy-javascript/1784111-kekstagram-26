@@ -1,5 +1,4 @@
 import initComments from './comments.js';
-import {isEscPressed} from './keyboard.js';
 
 const bigPictureElement = document.querySelector('.big-picture');
 const bigPictureImgElement = document.querySelector('.big-picture__img img');
@@ -30,7 +29,7 @@ function openFullScreenPhoto(photo) {
   }
 
   function closeFullScreenPhotoOnEsc(evt) {
-    if (isEscPressed(evt)) {
+    if (evt.key === 'Escape') {
       closeFullScreenPhoto();
     }
   }
